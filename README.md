@@ -1,8 +1,10 @@
-# SmartBank
+# Smart Bank
+**Another way of keeping and managing your Ethers.**
+
+Testing: https://ropsten.etherscan.io/address/0x5e5605758ff207d34a1ea26e22259c9c41e9e752
+
 
 ## A simple automated online bank of Ethers
-
-This system is another way of keeping and managing your Ethers. 
 
 The intention of this system is that **you can use your Ethers without easy 
 trace of transactions**, also avoiding others to easily see your balance on 
