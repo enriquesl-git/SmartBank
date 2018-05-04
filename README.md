@@ -1,5 +1,8 @@
 # SmartBank
-A simple automated online bank of Ethers
+
+## A simple automated online bank of Ethers
+
+This system is another way of keeping and managing your Ethers. 
 
 The intention of this system is that **you can use your Ethers without easy 
 trace of transactions**, also avoiding others to easily see your balance on 
