@@ -25,16 +25,16 @@ Doing internal transactions between accounts is the best way to avoid
 keeping trace of your activity, maximizing your privacy. 
 
 You can deposit ETH to the contract, which keeps account of what is yours. 
-Then you can transfer any amount of your account balance to another account. 
-Or you can send ETH from your account, that is, the contract will send 
-the ETH, not you, and they will be discounted from your account. 
-You can also send ETH to another account. Or you can even send ETH to ETH, 
-from address to address, going through the contract but without modifying 
-account balances, just resending the ETH received to another address. 
-In that case the Smart Bank acts just as a mixer, breaking the trace of the 
-Ethers in the Ethereum blockchain.
+You can also deposit ETH to another account. Then you can transfer any 
+amount of your account balance to another account. Or you can send ETH from 
+your account, that is, the contract will send the ETH, not you, and they 
+will be discounted from your account. Or you can even send ETH to ETH, from 
+address to address, going through the contract but without modifying account 
+balances, just resending the ETH received to another address. In that case 
+the Smart Bank acts just as a mixer, breaking the trace of the Ethers in the 
+Ethereum blockchain.
 
-As an added interesting authomated service, **you can trust another account 
+As an added interesting automated service, **you can trust another account 
 to take all your balance in case that you can't operate, like in the case 
 that you die, or if you lose the private key** of your account address. 
 
@@ -49,12 +49,12 @@ that you die, or if you lose the private key** of your account address.
 - not allowed sending to contract addresses
 
 ## Operations: 
-- `myBalance()`:                 get your account balance 
-- `deposit` (fallback function): from your ETH to your account 
-- `transfer(account, amount)`:   from your account      to other account
-- `transfer(account)`:           from your ETH address  to other account 
-- `pay(address, amount)`:        from your account      to other ETH address
-- `pay(address)`:                from your ETH address  to other ETH address 
+- `myBalance()`:                get your account balance 
+- `deposit`:                    from your ETH      to your account 
+- `deposit(account)`:           from your ETH      to other account 
+- `transfer(account, amount)`:  from your account  to other account
+- `pay(address, amount)`:       from your account  to other ETH address
+- `pay(address)`:               from your ETH      to other ETH address 
 
 - `entrust(account)`: set backup account, which can retrieve your balance
     (to remove backup, just set to 0x0, or to a new address)
