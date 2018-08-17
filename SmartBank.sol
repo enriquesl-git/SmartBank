@@ -17,31 +17,31 @@ pragma solidity ^0.4.23;
     Thus you can use this Smart Bank system as an Ether online wallet, i. e., 
     another way of keeping and managing your Ethers. The state machine of 
     Ethereum keeps balances of accounts instead of the history of transactions. 
-    Doing internal transactions between accounts is the best way to avoid 
-    keeping trace of your activity, maximizing your privacy. 
+    Doing internal transactions, with no "Event" logging between accounts is the 
+    best way to avoid keeping trace of your activity, maximizing your privacy. 
 
     You can deposit ETH to the contract, which keeps account of what is yours. 
-    Then you can transfer any amount of your account balance to another account. 
-    Or you can send ETH from your account, that is, the contract will send 
-    the ETH, not you, and they will be discounted from your account. 
-    You can also send ETH to another account. Or you can even send ETH to ETH, 
-    from address to address, going through the contract but without modifying 
-    account balances, just resending the ETH received to another address. 
-    In that case the Smart Bank acts just as a mixer, breaking the trace of the 
-    Ethers in the Ethereum blockchain.
+    You can also deposit ETH to another account. Then you can transfer any 
+    amount of your account balance to another account. Or you can send ETH from 
+    your account, that is, the contract will send the ETH, not you, and they 
+    will be discounted from your account. Or you can even send ETH to ETH, from 
+    address to address, going through the contract but without modifying account 
+    balances, just resending the ETH received to another address. In that case 
+    the Smart Bank acts just as a mixer, breaking the trace of the Ethers in the 
+    Ethereum blockchain.
 
-    As an added interesting authomated service, you can trust another account 
-    to take all your balance in case that you can't operate, like in the case 
-    that you die, or if you lose the private key of your account address. 
+    As an added interesting authomated service, you can trust another account to 
+    take all your balance in case that you can't operate, like in the case that 
+    you die, or if you lose the private key of your account address. 
 
 
 pros: 
 - history of transactions is lost, no events either
 - balances of addresses are not watched in block explorers
-- someone you trust can retrieve your balance (if you die, or ...)
+- someone that you trust can retrieve your balance (if you die, or ...)
 
 cons:
-- not for places which may need a payback (ICO, exchange, ...)
+- not for places which may do a payback (ICO, exchange, ...)
 - not allowed sending to contract addresses
 */
 
@@ -49,12 +49,12 @@ cons:
 /** @title Basic bank of Ethers. 
 
 Operations: 
-- deposit (fallback function): from ETH to your account 
-- myBalance(): get your account balance 
-- transfer(account, amount) from your account      to other account
-- transfer(account):        from your ETH address  to other account 
-- pay(address, amount):     from your account      to other ETH address
-- pay(address)              from your ETH address  to other ETH address 
+- myBalance():                  get your account balance
+- deposit():                    from your ETH       to your account
+- deposit(account):             from your ETH       to other account
+- transfer(account, amount):    from your account   to other account
+- pay(address, amount):         from your account   to other ETH address
+- pay(address):                 from your ETH       to other ETH address
 
 - entrust(account): set backup account, which can retrieve your balance
     (to remove backup, just set to 0x0, or to a new address)
@@ -78,22 +78,17 @@ contract SmartBank {
         return accountBalance[msg.sender];
     }
 
-    /** The Ether that you send to this contract is deposited to your account */
-    function () payable external {
-        deposit();
-    }
-
     /** from ETH to your account, 
     you do a deposit to your own account 
     gas cost: 21272(overhead) + 5609(execution) [+ 15000(first time)] */
     function deposit() payable public {
-        transfer(msg.sender);
+        deposit(msg.sender);
     }
 
     /** from your ETH address to any account, 
     you do a deposit to somebody else,
     gas cost: 21272(overhead) + 5581(execution) = 28261 */
-    function transfer(address account) payable public {
+    function deposit(address account) payable public {
         uint amount = msg.value;  // to read state only once
         require (amount > 0);  // to save gas of assigning a state variable
 
